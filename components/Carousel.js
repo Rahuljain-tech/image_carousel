@@ -23,14 +23,21 @@ const Carousel = ({ defaultScrollSpeed = 10 }) => {
   // Handle mouse wheel scrolling
   const onWheel = useCallback(
     (event) => {
-      if (!emblaApi) {
-        console.log("embla api not connected in carousel.")
-        return;
-      }
-      event.preventDefault();
-      emblaApi.scrollBy(event.deltaY > 0 ? scrollSpeed : -scrollSpeed);
-    },
-    [emblaApi, scrollSpeed]
+        if (!emblaApi) {
+          console.log("Embla API not connected.");
+          return;
+        }
+        // Prevent the default scrolling behavior
+        event.preventDefault();
+  
+        // Adjusting scroll by wheel delta (smooth scrolling)
+        const delta = event.deltaY > 0 ? scrollSpeed : -scrollSpeed;
+        console.log('Scrolling by delta:', delta);
+  
+        // Use emblaApi.scrollBy to move the carousel
+        emblaApi.scrollBy(delta, true);  // true enables smooth scrolling
+      },
+      [emblaApi, scrollSpeed]
   );
 
   useEffect(() => {
@@ -94,7 +101,7 @@ const Carousel = ({ defaultScrollSpeed = 10 }) => {
       </div>
 
       {/* Carousel */}
-      <div className="embla overflow-hidden" role="region" aria-label="Image Carousel">
+      <div className="embla overflow-hidden" role="region" aria-label="Image Carousel" ref={emblaRef}>
         <div className="embla__container flex flex-nowrap">
           {chapters?.length > 0 ? (
       chapters.map((chapter) => {
@@ -161,7 +168,7 @@ const Carousel = ({ defaultScrollSpeed = 10 }) => {
       </div>
 
       {/* Navbar */}
-      <Navbar emblaApi={emblaApi} />
+      {emblaApi && <Navbar emblaApi={emblaApi}  />}
     </div>
   );
 };
