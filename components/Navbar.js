@@ -11,24 +11,24 @@ const Navbar = React.memo(({ emblaApi }) => {
         return;
       }
 
-      // Define book ranges
+      // Defining book ranges
       const bookRanges = {
-        1: [1, 7],   // Assuming chapter IDs are 1-7
-        2: [8, 14],  // Assuming chapter IDs are 8-14
-        3: [15, 21], // Assuming chapter IDs are 15-21
+        1: [1, 7],   
+        2: [8, 14],  
+        3: [15, 21], 
       };
 
       const [start, end] = bookRanges[bookNumber];
-      console.log(`Book ${bookNumber}: start ${start}, end ${end}`); // Debug log
+      console.log(`Book ${bookNumber}: start ${start}, end ${end}`); 
 
-      // Find the index of the start chapter
+      // Find the index of the start chapter, it help in scrolling to first chapters of each book
       const startChapterIndex = chapters.findIndex((ch) => ch.id === start);
-      console.log(`Start chapter index for Book ${bookNumber}: ${startChapterIndex}`); // Debug log
+      console.log(`Start chapter index for Book ${bookNumber}: ${startChapterIndex}`);
 
       if (startChapterIndex !== -1) {
         emblaApi.scrollTo(startChapterIndex);
       } else {
-        console.warn(`No chapter found for ID: ${start}`); // Debug log
+        console.warn(`No chapter found for ID: ${start}`); 
       }
     },
     [emblaApi, chapters]

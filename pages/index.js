@@ -1,4 +1,3 @@
-// pages/index.js
 import Head from 'next/head';
 import Carousel from '../components/Carousel';
 import DarkModeToggle from '../components/DarkModeToggle';

@@ -1,4 +1,3 @@
-// components/DarkModeToggle.js
 import React, { useEffect, useState } from 'react';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
@@ -6,7 +5,7 @@ const DarkModeToggle = () => {
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
-    // Check local storage or system preference
+    
     const storedTheme = localStorage.getItem('theme');
     if (storedTheme === 'dark') {
       setIsDark(true);

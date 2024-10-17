@@ -1,4 +1,3 @@
-// context/AppContext.js
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocalStorage } from '../hooks/useLocalStorage';
@@ -12,27 +11,27 @@ export const AppProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  // Bookmarks managed via localStorage
+  
   const [bookmarks, setBookmarks] = useLocalStorage('bookmarks', []);
 
-  // Fetch user XP
+  // Fetching user XP
   const fetchUserXP = async () => {
     try {
       const response = await axios.get('https://mocki.io/v1/711ee638-acc4-47aa-b0d1-c63fe3c2b85c');
       console.log(response.data.xp)
-      setUserXP(response.data.xp); // Assuming API returns { xp: number }
+      setUserXP(response.data.xp); 
     } catch (err) {
       console.error('Error fetching user XP:', err);
       setError(true);
     }
   };
 
-  // Fetch chapters data
+  // Fetching chapters data
   const fetchChapters = async () => {
     try {
       const response = await axios.get('https://mocki.io/v1/306e1e4d-22c0-4645-90cc-5cb048238f56');
         console.log(response.data.books);
-      setChapters(response.data.books.chapters); // Assuming API returns { chapters: [...] }
+      setChapters(response.data.books.chapters);
     } catch (err) {
       console.error('Error fetching chapters:', err);
       setError(true);
@@ -42,11 +41,11 @@ export const AppProvider = ({ children }) => {
 
   const fetchBooks = async () => {
     try {
-        const response = await fetch('https://mocki.io/v1/306e1e4d-22c0-4645-90cc-5cb048238f56'); // Replace with your API URL
+        const response = await fetch('https://mocki.io/v1/306e1e4d-22c0-4645-90cc-5cb048238f56'); 
         const data = await response.json();
         setBooks(data.books);
         // Flatten the chapters for all books
-        const allChapters = data.books.flatMap(book => book.chapters);
+        const allChapters = data.books.flatMap(book => book.chapters); //it helps in arranging all the chapters in one array
         setChapters(allChapters);
     } catch (error) {
         console.error('Error fetching books:', error);

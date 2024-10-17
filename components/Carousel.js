@@ -1,4 +1,3 @@
-// components/Carousel.js
 import React, { useContext, useEffect, useState, useCallback } from 'react';
 import { AppContext } from '../context/AppContext';
 import useEmblaCarousel from 'embla-carousel-react';
@@ -15,26 +14,24 @@ const Carousel = ({ defaultScrollSpeed = 10 }) => {
   const [shakeSlide, setShakeSlide] = useState(null);
   const [scrollSpeed, setScrollSpeed] = useState(defaultScrollSpeed);
 
-  useEffect(() => {
-    console.log('Chapters:', chapters); // Check the structure and length of the chapters array
-  }, [chapters]);
+  
 
 
-  // Handle mouse wheel scrolling
+  // To handle mouse wheel scrolling
   const onWheel = useCallback(
     (event) => {
         if (!emblaApi) {
           console.log("Embla API not connected.");
           return;
         }
-        // Prevent the default scrolling behavior
+        
         event.preventDefault();
   
-        // Adjusting scroll by wheel delta (smooth scrolling)
+       
         const delta = event.deltaY > 0 ? scrollSpeed : -scrollSpeed;
         console.log('Scrolling by delta:', delta);
   
-        // Use emblaApi.scrollBy to move the carousel
+        
         emblaApi.scrollBy(delta, true);  // true enables smooth scrolling
       },
       [emblaApi, scrollSpeed]
@@ -44,7 +41,7 @@ const Carousel = ({ defaultScrollSpeed = 10 }) => {
     const emblaNode = emblaRef.current;
     if (!emblaApi || !emblaNode) return;
 
-    // Adding event listener directly to the embla container
+  
     const handleWheel = (e) => onWheel(e);
     emblaNode.addEventListener('wheel', handleWheel);
 
@@ -53,21 +50,14 @@ const Carousel = ({ defaultScrollSpeed = 10 }) => {
     };
   }, [emblaApi, onWheel, emblaRef]);
 
-//   useEffect(() => {
-//     if (!emblaApi) return;
-//     emblaApi.on('wheel', onWheel);
-//     return () => emblaApi.off('wheel', onWheel);
-//   }, [emblaApi, onWheel]);
+
 
   const handleSlideClick = (chapter) => {
     if (userXP < chapter.unlockXp) {
-      // Trigger shake animation
+      // Triggers shake animation
       setShakeSlide(chapter.id);
       setTimeout(() => setShakeSlide(null), 500);
     } else {
-      // Navigate to chapter detail or perform desired action
-      // Example:
-      // window.location.href = `/chapter/${chapter.id}`;
       console.log(`Navigating to chapter ${chapter.id}`);
     }
   };
